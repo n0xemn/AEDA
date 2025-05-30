@@ -13,5 +13,10 @@ int main(){
     exibir(L_enc);
     L_enc = liberar(L_enc);
 
+
+
+
+
+
     return 0;
 }

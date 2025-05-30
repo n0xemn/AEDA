@@ -126,7 +126,7 @@ bool inserir_inicio(lista_enc* L_enc, Item it){
 }
 
 bool inserir_meio(lista_enc* L_enc, Item it, int posicao){
-    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0)
+    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0) // mudar pra uma formula mais simples. Pensar  mais.
     {
         celula* aux_prox = L_enc->prim;
         celula* aux_ant;
@@ -194,7 +194,7 @@ bool remover_comeco(lista_enc* L_enc){
     celula* aux = L_enc->prim; // a logica estava errada
     if (aux != NULL)
     {
-        L_enc->prim = aux->prox;
+        L_enc->prim = aux->prox; 
         L_enc->qtde--;
         free(aux);
         return true;
@@ -203,7 +203,7 @@ bool remover_comeco(lista_enc* L_enc){
 }
 
 bool remover_meio(lista_enc* L_enc, int posicao){
-    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0)
+    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0) // pensar numa logica melhor e menos custosa. fazer a auxiliar ir soh ate uma posicao antes da posicao de remocao
     {
         celula* aux_prox = L_enc->prim;
         celula* aux_ant;

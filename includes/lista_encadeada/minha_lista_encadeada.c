@@ -203,7 +203,7 @@ bool remover_comeco(lista_enc* L_enc){
 }
 
 bool remover_meio(lista_enc* L_enc, int posicao){
-    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0) // pensar numa logica melhor e menos custosa. fazer a auxiliar ir soh ate uma posicao antes da posicao de remocao
+    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0) // pensar numa logica melhor e menos custosa. fazer a auxiliar ir soh ate uma posicao antes da posicao de remocao.
     {
         celula* aux_prox = L_enc->prim;
         celula* aux_ant;
@@ -244,7 +244,7 @@ bool remover_fim(lista_enc* L_enc){
 }
 
 int tamanho(lista_enc* L_enc){
-    if (L_enc == NULL) // perguntar ele se eu devia dar um exit aqui se nao tiver uma lista iniciada
+    if (L_enc == NULL)
     {
         return 0;
     }

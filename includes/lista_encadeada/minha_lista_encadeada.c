@@ -10,7 +10,7 @@ struct lista_enc
 
 struct celula
 {
-    int valor;
+    Item valor;
     celula* prox;
 };
 
@@ -167,6 +167,29 @@ lista_enc* liberar(lista_enc* L_enc){
     return NULL;
 }
 
+void ordenar(lista_enc* L_enc){
+    if (L_enc == NULL)
+    {
+        return;
+    }
+    
+    for (int i = 1; i < L_enc->qtde; i++)
+    {
+        celula* cel_aux = L_enc->prim;
+
+        for (int j = 1; j < L_enc->qtde + 1 - i; j++)
+        {
+            Item valor_aux = cel_aux->valor;
+            if (valor_aux > cel_aux->prox->valor)
+            {
+                cel_aux->valor = cel_aux->prox->valor;
+                cel_aux->prox->valor = valor_aux;
+            }
+            cel_aux = cel_aux->prox;
+        }
+    }
+}
+
 bool remover_comeco(lista_enc* L_enc){
     celula* aux = L_enc->prim; // a logica estava errada
     if (aux != NULL)
@@ -205,7 +228,7 @@ bool remover_meio(lista_enc* L_enc, int posicao){
 }
 
 bool remover_fim(lista_enc* L_enc){
-    if (L_enc == NULL)
+    if (L_enc == NULL || vazia(L_enc))
     {
         return false;
     }
@@ -223,7 +246,7 @@ bool remover_fim(lista_enc* L_enc){
 int tamanho(lista_enc* L_enc){
     if (L_enc == NULL) // perguntar ele se eu devia dar um exit aqui se nao tiver uma lista iniciada
     {
-        return NULL;
+        return 0;
     }
     return L_enc->qtde;
 }

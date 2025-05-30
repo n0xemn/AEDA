@@ -43,6 +43,10 @@ lista_enc* liberar(lista_enc* L_enc);
 /*
 
 */
+void ordenar(lista_enc* L_enc);
+/*
+
+*/
 bool remover_comeco(lista_enc* L_enc);
 /*
 

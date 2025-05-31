@@ -57,7 +57,7 @@ fila_enc* iniciar(){ // certo/pronto
     return L_enc;
 }
 
-bool inserir(fila_enc* L_enc, Item it){ // certo/pronto
+bool inserir(fila_enc* L_enc, Item it){ // se eu insiro duas vezes da errado e eu nao sei pq
     celula* nova_celula = criar_celula(it);
     if (nova_celula == NULL)
     {

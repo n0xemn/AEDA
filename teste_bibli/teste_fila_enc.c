@@ -4,10 +4,10 @@
 
 int main(){
     fila_enc* F = iniciar();
-    inserir(F, 2);
-    printf("%d", front(F));
-    remover(L);
-    printf("%d", front(F));
+    int a =  4;
+    inserir(F, a);
+    inserir(F, 78);
+    printf("%d ", front(F));
 
     F = liberar(F);
 

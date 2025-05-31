@@ -6,6 +6,9 @@ int main(){
     fila_enc* F = iniciar();
     inserir(F, 2);
     printf("%d", front(F));
+    remover(L);
+    printf("%d", front(F));
+
     F = liberar(F);
 
     return 0;

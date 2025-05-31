@@ -4,15 +4,8 @@
 
 int main(){
     fila_enc* F = iniciar();
-    for (Item i = 0; i < 5; i++)
-    {
-        inserir(F, i);
-    }
-    for (int i = 0; i < 5; i++)
-    {
-        printf("%d ", front(F));
-        remover(F);
-    }
+    inserir(F, 2);
+    printf("%d", front(F));
     F = liberar(F);
 
     return 0;

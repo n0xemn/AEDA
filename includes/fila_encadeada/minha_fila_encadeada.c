@@ -4,7 +4,6 @@
 
 struct fila_enc
 {
-    int qtde; // tentar fazer sem o  qtde
     celula* prim;
 };
 

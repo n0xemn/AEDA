@@ -4,9 +4,9 @@
 
 int main(){
     fila_enc* F = iniciar();
-    for (int i = 0; i < 5; i++)
+    for (Item i = 0; i < 5; i++)
     {
-        inserir(F, i + 1);
+        inserir(F, i);
     }
     for (int i = 0; i < 5; i++)
     {

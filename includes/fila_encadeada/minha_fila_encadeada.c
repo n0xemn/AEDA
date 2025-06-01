@@ -48,16 +48,17 @@ int front(fila_enc* L_enc){ // certo/pronto
 }
 
 fila_enc* iniciar(){ // certo/pronto
-    fila_enc* L_enc = (fila_enc*) calloc(1, sizeof(fila_enc));
+    fila_enc* L_enc = (fila_enc*) malloc(sizeof(fila_enc));
     if (L_enc == NULL)
     {
         return NULL;
     }
+    L_enc->prim = NULL;
 
     return L_enc;
 }
 
-bool inserir(fila_enc* L_enc, Item it){ // se eu insiro duas vezes da errado e eu nao sei pq
+bool inserir(fila_enc* L_enc, Item it){ // certo/pronto
     celula* nova_celula = criar_celula(it);
     if (nova_celula == NULL)
     {
@@ -76,6 +77,7 @@ fila_enc* liberar(fila_enc* L_enc){ // certo/pronto
     }
     
     esvaziar(L_enc);
+    
     free(L_enc);
     return NULL;
 }
@@ -86,23 +88,22 @@ bool remover(fila_enc* L_enc){ // certo/pronto
         return false;
     }
     
-    celula* aux = L_enc->prim;
-    if (aux->prox == NULL)
+    celula* aux_ant = L_enc->prim;
+    if (aux_ant->prox == NULL)
     {
         L_enc->prim = NULL;
-        free(aux);
+        free(aux_ant);
         return true;
     }
-    while (true)
+    celula* aux_pro = L_enc->prim->prox;
+    while (aux_pro->prox != NULL)
     {
-        if (aux->prox->prox == NULL)
-        {
-            free(aux->prox);
-            aux->prox == NULL;
-            return true;
-        }
-        aux = aux->prox; // ta feio, mas funciona
+        aux_ant = aux_pro;
+        aux_pro = aux_pro->prox;
     }
+    aux_ant->prox = NULL;
+    free(aux_pro);
+    return true;
 }
 
 int tamanho(fila_enc* L_enc){ // certo/pronto

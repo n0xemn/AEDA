@@ -24,7 +24,7 @@ static celula* criar_celula(Item it){ // certo/pronto
     return nova;
 }
 
-bool esvaziar(fila_enc* L_enc){ // certo/pronto
+bool esvaziar(fila_enc* L_enc){ // certo/pronto 
     if (L_enc == NULL || L_enc->prim == NULL)
     {
         return false;

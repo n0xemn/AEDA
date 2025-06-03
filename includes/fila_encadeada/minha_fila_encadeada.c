@@ -43,8 +43,12 @@ int front(fila_enc* L_enc){ // certo/pronto
         printf("Sem elemento a ser exibido");
         return 0;
     }
-
-    return L_enc->prim->valor;
+    celula* aux = L_enc->prim;
+    while (aux->prox != NULL)
+    {
+        aux = aux->prox;
+    }
+    return aux->valor;
 }
 
 fila_enc* iniciar(){ // certo/pronto

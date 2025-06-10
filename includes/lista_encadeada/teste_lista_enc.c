@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "minha_lista_ancadeada.h"
+#include "minha_lista_encadeada.h"
 
 int main(){
     lista_enc* L_enc = iniciar();

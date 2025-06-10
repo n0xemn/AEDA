@@ -1,4 +1,4 @@
-#include "minha_lista_ancadeada.h"
+#include "minha_lista_encadeada.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,7 +14,7 @@ struct celula
     celula* prox;
 };
 
-int busca(lista_enc* L_enc, Item it){
+int busca_indice(lista_enc* L_enc, Item it){
     if (L_enc ==NULL)
     {
         return 0;
@@ -27,6 +27,26 @@ int busca(lista_enc* L_enc, Item it){
         if (cel_aux->valor == it)
         {
             return i;
+        }
+        cel_aux = cel_aux->prox;
+        i++;
+    }
+    return 0;
+}
+
+Item busca_posicao(lista_enc* L_enc, int posi){
+    if (L_enc == NULL || L_enc->prim == NULL)
+    {
+        return 0;
+    }
+    
+    int i = 1;
+    celula* cel_aux = L_enc->prim;
+    while (cel_aux != NULL)
+    {
+        if (i == posi)
+        {
+            return cel_aux->valor;
         }
         cel_aux = cel_aux->prox;
         i++;

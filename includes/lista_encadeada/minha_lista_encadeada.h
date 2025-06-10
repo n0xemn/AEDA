@@ -11,7 +11,11 @@ typedef struct celula celula;
 /*
 
 */
-int busca(lista_enc* L_enc, Item it);
+int busca_indice(lista_enc* L_enc, Item it);
+/*
+
+*/
+Item busca_posicao(lista_enc* L_enc, int posi);
 /*
 
 */

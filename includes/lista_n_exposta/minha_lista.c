@@ -9,7 +9,7 @@ struct lista
 };
 
 int busca(lista *L, int item){
-    if (vazia(L))
+    if (vazia(L) && L == NULL)
     {
         return 0;
     }
@@ -23,10 +23,20 @@ int busca(lista *L, int item){
 }
 
 int capacidade(lista *L){
+    if (L == NULL)
+    {
+        return 0;
+    }
+    
     return L->cap;
 }
 
 bool cheia(lista *L){
+    if (L == NULL)
+    {
+        return false;
+    }
+    
     if (L->qtde >= L->cap)
     {
         return true;
@@ -38,6 +48,11 @@ bool cheia(lista *L){
 }
 
 void exibir(lista *L){
+    if (L == NULL)
+    {
+        return;
+    }
+    
     for (int i = 0; i < L->qtde; i++)
     {
         printf("%d ", L->elementos[i]);
@@ -58,10 +73,20 @@ lista * iniciar(int cap){
         list_aux->cap = cap;
         list_aux->qtde = 0;
     }
+    else
+    {
+        return NULL;
+    }
+
     return list_aux;
 }
 
 lista * impares(lista *L){
+    if (L == NULL)
+    {
+        return NULL;
+    }
+    
     lista* impar = iniciar(L->cap);
     
     for (int i = 0; i < L->qtde; i++)
@@ -75,41 +100,44 @@ lista * impares(lista *L){
 }
 
 bool inserir_final(lista *L, int item){
-    if (!cheia(L))
+    if (L == NULL || cheia(L))
     {
-        L->elementos[L->qtde] = item;
-        L->qtde++;
-        return true;
+        return false;
     }
-    return false;
+    
+    L->elementos[L->qtde] = item;
+    L->qtde++;
+    return true;
 }
 
 bool inserir_inicio(lista *L, int item){
-    if (!cheia(L))
+    if (L == NULL || cheia(L))
     {
-        for (int i = L->qtde; i > 0; i--)
-        {
-            L->elementos[i] = L->elementos[i - 1];
-        }
-        L->elementos[0] = item;
-        L->qtde++;
-        return true;
+        return false;
     }
-    return false;
+    
+    for (int i = L->qtde; i > 0; i--)
+    {
+        L->elementos[i] = L->elementos[i - 1];
+    }
+    L->elementos[0] = item;
+    L->qtde++;
+    return true;
 }
 
 bool inserir_meio(lista *L, int item, int posicao){
-    if (!cheia(L))
+    if (L == NULL || cheia(L))
     {
-        for (int i = L->qtde; i > posicao - 1; i--)
-        {
-            L->elementos[i] = L->elementos[i - 1];
-        }
-        L->elementos[posicao - 1] = item;
-        L->qtde++;
-        return true;
+        return false;
     }
-    return false;
+    
+    for (int i = L->qtde; i > posicao - 1; i--)
+    {
+        L->elementos[i] = L->elementos[i - 1];
+    }
+    L->elementos[posicao - 1] = item;
+    L->qtde++;
+    return true;
 }
 
 void liberar(lista** L){
@@ -119,6 +147,11 @@ void liberar(lista** L){
 }
 
 int menores(lista *L, int v){
+    if (L == NULL || vazia(L))
+    {
+        return 0;
+    }
+
     int quant = 0;
     for (int i = 0; i < L->qtde; i++)
     {
@@ -131,6 +164,11 @@ int menores(lista *L, int v){
 }
 
 void ordenar_cresc(lista *L){
+    if (L == NULL || vazia(L))
+    {
+        return;
+    }
+
     for (int i = 0; i < L->qtde - 1; i++)
     {
         for (int j = 0; j < L->qtde -1 - i; j++)
@@ -146,6 +184,11 @@ void ordenar_cresc(lista *L){
 }
 
 void ordenar_decresc(lista *L){
+    if (L == NULL || vazia(L))
+    {
+        return;
+    }
+
     for (int i = 0; i < L->qtde - 1; i++)
     {
         for (int j = 0; j < L->qtde -1 - i; j++)
@@ -161,6 +204,11 @@ void ordenar_decresc(lista *L){
 }
 
 lista *pares(lista *L){
+    if (L == NULL || vazia(L))
+    {
+        return L;
+    }
+
     lista* par = iniciar(L->cap);
     for (int i = 0; i < L->qtde; i++)
     {
@@ -173,51 +221,61 @@ lista *pares(lista *L){
 }
 
 bool remov_final(lista *L){
-    if (!vazia(L))
+    if (L == NULL || cheia(L))
     {
-        L->qtde--;
-        return true;
+        return false;
     }
-    return false;
+
+    L->qtde--;
+    return true;
 }
 
 bool remov_inicio(lista *L){
-    if (!vazia(L))
+    if (L == NULL || cheia(L))
     {
-        for (int i = 0; i < L->qtde - 1; i++)
-        {
-            L->elementos[i] = L->elementos[i + 1];
-        }
-        L->qtde--;
-        return true;
+        return false;
     }
-    return false;
+
+    for (int i = 0; i < L->qtde - 1; i++)
+    {
+        L->elementos[i] = L->elementos[i + 1];
+    }
+    L->qtde--;
+    return true;
 }
 
 bool remov_meio(lista *L, int posicao){
-    if (!vazia(L))
+    if (L == NULL || cheia(L))
     {
-        for (int i = posicao - 1; i < L->qtde - 1; i++)
-        {
-            L->elementos[i] = L->elementos[i + 1];
-        }
-        L->qtde--;
-        return true;
+        return false;
     }
-    return false;
+
+    for (int i = posicao - 1; i < L->qtde - 1; i++)
+    {
+        L->elementos[i] = L->elementos[i + 1];
+    }
+    L->qtde--;
+    return true;
 }
 
 int tamanho(lista *L){
+    if (L == NULL)
+    {
+        return 0;
+    }
+
     return L->qtde + 1;
 }
 
 bool vazia(lista *L){
+    if (L == NULL)
+    {
+        return false;
+    }
+
     if (L->qtde == 0)
     {
         return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }

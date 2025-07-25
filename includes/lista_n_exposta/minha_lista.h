@@ -29,7 +29,7 @@ int capacidade(lista *L);
 /*
 O que faz: Fala se a lista esta cheio.
 Entrada: Uma lista.
-Saida: Um valor boleano (sim/nao). 
+Saida: Um valor boleano (true ou false). 
 */
 bool cheia(lista *L);
 /*
@@ -41,7 +41,7 @@ void exibir(lista *L);
 /*
 O que faz: Inicializa a sua lista.
 Entrada: Uma lista.
-Saida: Nao tem
+Saida: A lista criada.
 */
 lista * iniciar(int cap);
 /*
@@ -53,19 +53,19 @@ lista *impares(lista *L);
 /*
 O que faz: Inseri um elemento no fim da lista.
 Entrada: Uma lista e um elemento.
-saida: Uma lista atualizada e um valor boleano pra dizer se o insersao deu certo ou nao.
+saida: Uma lista atualizada e um valor boleano pra dizer se a insersao deu certo ou nao.
 */
 bool inserir_final(lista *L, int item);
 /*
 O que faz: Inseri um elemento no começo da lista.
 Entrada: Uma lista e um elemento.
-saida: Uma lista atualizada e um valor boleano pra dizer se o insersao deu certo ou nao.
+saida: Uma lista atualizada e um valor boleano pra dizer se a insersao deu certo ou nao.
 */
 bool inserir_inicio(lista *L, int item);
 /*
 O que faz: Inseri um elemento na posicao desejada da lista.
 Entrada: Uma lista, um elemento e uma posicao.
-saida: Uma lista atualizada e um valor boleano pra dizer se o insersao deu certo ou nao.
+saida: Uma lista atualizada e um valor boleano pra dizer se a insersao deu certo ou nao.
 */
 bool inserir_meio(lista *L, int item, int posicao);
 /*

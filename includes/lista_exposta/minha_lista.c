@@ -26,10 +26,8 @@ bool cheia(lista *L){
     {
         return true;
     }
-    else
-    {
-        return false;
-    }
+ 
+    return false;
 }
 
 void exibir(lista *L){
@@ -97,6 +95,11 @@ bool inserir_meio(lista *L, int item, int posicao){
 }
 
 int menores(lista *L, int v){
+    if (vazia(L))
+    {
+        return 0;
+    }
+    
     int quant = 0;
     for (int i = 0; i < L->qtde; i++)
     {
@@ -109,6 +112,11 @@ int menores(lista *L, int v){
 }
 
 void ordenar_cresc(lista *L){
+    if (vazia(L))
+    {
+        return;
+    }
+
     for (int i = 0; i < L->qtde - 1; i++)
     {
         for (int j = 0; j < L->qtde -1 - i; j++)
@@ -124,6 +132,11 @@ void ordenar_cresc(lista *L){
 }
 
 void ordenar_decresc(lista *L){
+    if (vazia(L))
+    {
+        return;
+    }
+
     for (int i = 0; i < L->qtde - 1; i++)
     {
         for (int j = 0; j < L->qtde -1 - i; j++)
@@ -139,6 +152,10 @@ void ordenar_decresc(lista *L){
 }
 
 lista pares(lista *L){
+    if (vazia(L))
+    {
+        return;
+    }
     lista par;
     iniciar(&par);
     for (int i = 0; i < L->qtde; i++)

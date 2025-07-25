@@ -3,7 +3,7 @@
 
 /*
 gcc -c nome_arquivo_biblioteca.c : pra executar o arquivo c da biblioteca
-gcc nome_do_arquivo.c pasta/nome_arquivo_biblioteca.o -o noome_que_vc_quer : pra executar o arquivo com a biblioteca
+gcc nome_do_arquivo.c pasta/nome_arquivo_biblioteca.o -o nome_que_vc_quer : pra executar o arquivo com a biblioteca
 
 */
 
@@ -30,9 +30,9 @@ Saida: A capacidade total da lista.
 */
 int capacidade(lista *L);
 /*
-O que faz: Fala se a lista esta cheio.
+O que faz: Fala se a lista esta cheia.
 Entrada: Uma lista.
-Saida: Um valor boleano (sim/nao). 
+Saida: Um valor boleano (true ou false). 
 */
 bool cheia(lista *L);
 /*
@@ -56,25 +56,25 @@ lista impares(lista *L);
 /*
 O que faz: Inseri um elemento no fim da lista.
 Entrada: Uma lista e um elemento.
-saida: Uma lista atualizada e um valor boleano pra dizer se o insersao deu certo ou nao.
+saida: Uma lista atualizada e um valor boleano pra dizer se a insersao deu certo ou nao.
 */
 bool inserir_final(lista *L, int item);
 /*
 O que faz: Inseri um elemento no começo da lista.
 Entrada: Uma lista e um elemento.
-saida: Uma lista atualizada e um valor boleano pra dizer se o insersao deu certo ou nao.
+saida: Uma lista atualizada e um valor boleano pra dizer se a insersao deu certo ou nao.
 */
 bool inserir_inicio(lista *L, int item);
 /*
 O que faz: Inseri um elemento na posicao desejada da lista.
 Entrada: Uma lista, um elemento e uma posicao.
-saida: Uma lista atualizada e um valor boleano pra dizer se o insersao deu certo ou nao.
+saida: Uma lista atualizada e um valor boleano pra dizer se a insersao deu certo ou nao.
 */
 bool inserir_meio(lista *L, int item, int posicao);
 /*
-O que faz: Da a quantidade de valores na lista menores que v.
-Entrada: Uma lista, um elemento que vai ser comparedo.
-saida: Um valor inteiro representando a quantidade de numeros menores que v.
+O que faz: Da a quantidade de valores na lista menores que o item escolhido.
+Entrada: Uma lista, um elemento a ser comparado.
+saida: Um valor inteiro representando a quantidade de numeros menores que o item escolhido.
 */
 int menores(lista *L, int v);
 /*
@@ -122,7 +122,7 @@ int tamanho(lista *L);
 /*
 O que faz: Fala se a lista esta vazia.
 Entrada: Uma lista.
-Saida: Um valor boleano (sim/nao).
+Saida: Um valor boleano (true ou false).
 */
 bool vazia(lista *L);
 

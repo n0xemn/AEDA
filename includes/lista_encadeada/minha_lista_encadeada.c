@@ -14,8 +14,8 @@ struct celula
     celula* prox;
 };
 
-int busca_indice(lista_enc* L_enc, Item it){
-    if (L_enc ==NULL)
+int busca_por_item(lista_enc* L_enc, Item it){
+    if (L_enc == NULL || vazia(L_enc))
     {
         return 0;
     }
@@ -34,8 +34,8 @@ int busca_indice(lista_enc* L_enc, Item it){
     return 0;
 }
 
-Item busca_posicao(lista_enc* L_enc, int posi){
-    if (L_enc == NULL || L_enc->prim == NULL)
+Item busca_por_posicao(lista_enc* L_enc, int posi){
+    if (L_enc == NULL || vazia(L_enc))
     {
         return 0;
     }
@@ -56,7 +56,7 @@ Item busca_posicao(lista_enc* L_enc, int posi){
 
 static celula* criar_celula(Item it){
     // pra deixar funcoes fazendo uma coisa especifica. toda vez que precisar criar uma celula nova eh soh chamar essa funcao
-    // e "static" quer dizer que a funcao soh pode ser usada no arquivo em que ela ta.
+    // "static" quer dizer que a funcao soh pode ser usada no arquivo em que ela ta.
     celula* nova = (celula*) calloc(1, sizeof(celula));
     if (nova == NULL)
     {
@@ -80,7 +80,7 @@ bool esvaziar(lista_enc* L_enc){
 }
 
 void exibir(lista_enc* L_enc){
-    if (L_enc == NULL)
+    if (L_enc == NULL || vazia(L_enc))
     {
         return;
     }
@@ -94,7 +94,7 @@ void exibir(lista_enc* L_enc){
 }
 
 lista_enc* iniciar(){
-    lista_enc * L_enc = (lista_enc*) calloc(1, sizeof(lista_enc)); // mudei pra calloc pra nao te que colocar que qtde e prim recebem 0 ou null 
+    lista_enc* L_enc = (lista_enc*) calloc(1, sizeof(lista_enc));  
     if (L_enc == NULL)
     {
         return NULL;
@@ -103,12 +103,11 @@ lista_enc* iniciar(){
 }
 
 bool inserir_fim(lista_enc* L_enc, Item it){
-    if (!L_enc)
+    if (L_enc == NULL)
     {
         return false;
     }
                      
-    //celula* celula_nova = (celula*) malloc(sizeof(celula));
     celula* nova_celula = criar_celula(it);
     if (nova_celula == NULL)
     {
@@ -126,19 +125,23 @@ bool inserir_fim(lista_enc* L_enc, Item it){
         }
         celula_auxiliar = celula_auxiliar->prox;
     }
-    L_enc->prim = nova_celula; // poderia usar a funcao de inserir no inicio, mas eu teria que medar mais coisae o com preguica
+    L_enc->prim = nova_celula;
     L_enc->qtde++;
     return true;
 }
 
 bool inserir_inicio(lista_enc* L_enc, Item it){
-    //celula* nova_celula = (celula*) malloc(sizeof(celula)); //mudar
+    if (L_enc == NULL)
+    {
+        return false;
+    }
+    
     celula* nova_celula = criar_celula(it);
     if (nova_celula == NULL)
     {
         return false;
     }
-    //nova_celula->valor = it;
+
     nova_celula->prox = L_enc->prim;
     L_enc->prim = nova_celula;
     L_enc->qtde++;
@@ -146,34 +149,37 @@ bool inserir_inicio(lista_enc* L_enc, Item it){
 }
 
 bool inserir_meio(lista_enc* L_enc, Item it, int posicao){
-    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0) // mudar pra uma formula mais simples. Pensar  mais.
+    if (L_enc == NULL || vazia(L_enc || posicao <= 0 || posicao > L_enc->qtde))
     {
-        celula* aux_prox = L_enc->prim;
-        celula* aux_ant;
-        celula* cel_aux = criar_celula(it);
-        if (cel_aux == NULL)
+        return false;
+    }
+    
+    celula* aux_prox = L_enc->prim;
+    celula* aux_ant;
+    celula* nova_celula = criar_celula(it);
+    if (nova_celula == NULL)
+    {
+        return false;
+    }
+    
+    if (posicao > 1)
+    {
+        for (int i = 1; i < posicao; i++)
         {
-            return false;
+            aux_ant = aux_prox;
+            aux_prox = aux_prox->prox;
         }
-        
-        if (posicao > 1)
-        {
-            for (int i = 1; i < posicao; i++)
-            {
-                aux_ant = aux_prox;
-                aux_prox = aux_prox->prox;
-            }
-            cel_aux->prox = aux_prox;
-            aux_ant->prox = cel_aux;
-            L_enc->qtde++;
-            return true;
-        } 
-        cel_aux->prox = L_enc->prim;
-        L_enc->prim = cel_aux;
+        nova_celula->prox = aux_prox;
+        aux_ant->prox = nova_celula;
         L_enc->qtde++;
         return true;
-    }
-    return false;
+    } 
+
+    nova_celula->prox = L_enc->prim;
+    L_enc->prim = nova_celula;
+    L_enc->qtde++;
+    
+    return true;
 }
 
 lista_enc* liberar(lista_enc* L_enc){
@@ -188,7 +194,7 @@ lista_enc* liberar(lista_enc* L_enc){
 }
 
 void ordenar(lista_enc* L_enc){
-    if (L_enc == NULL)
+    if (L_enc == NULL || vazia(L_enc))
     {
         return;
     }
@@ -211,40 +217,42 @@ void ordenar(lista_enc* L_enc){
 }
 
 bool remover_comeco(lista_enc* L_enc){
-    celula* aux = L_enc->prim; // a logica estava errada
-    if (aux != NULL)
+    if (L_enc == NULL || vazia(L_enc))
     {
-        L_enc->prim = aux->prox; 
-        L_enc->qtde--;
-        free(aux);
-        return true;
+        return false;
     }
-    return false;
+    
+    celula* aux = L_enc->prim;
+    L_enc->prim = aux->prox; 
+    L_enc->qtde--;
+    free(aux);
+    return true;
 }
 
 bool remover_meio(lista_enc* L_enc, int posicao){
-    if (L_enc || !vazia(L_enc) || posicao <= L_enc->qtde || posicao > 0) // pensar numa logica melhor e menos custosa. fazer a auxiliar ir soh ate uma posicao antes da posicao de remocao.
+    if (L_enc == NULL || vazia(L_enc) || posicao <= 0 || posicao > L_enc->qtde)
     {
-        celula* aux_prox = L_enc->prim;
-        celula* aux_ant;
-        if (posicao > 1)
+        return false;
+    }
+    
+    celula* aux_prox = L_enc->prim;
+    celula* aux_ant;
+    if (posicao > 1)
+    {
+        for (int i = 1; i < posicao; i++)
         {
-            for (int i = 1; i < posicao; i++)
-            {
-                aux_ant = aux_prox;
-                aux_prox = aux_prox->prox;
-            }
-            aux_ant->prox = aux_prox->prox;
-            free(aux_prox);
-            L_enc->qtde--;
-            return true;
+            aux_ant = aux_prox;
+            aux_prox = aux_prox->prox;
         }
-        L_enc->prim = aux_prox->prox;
+        aux_ant->prox = aux_prox->prox;
         free(aux_prox);
         L_enc->qtde--;
         return true;
     }
-    return false;
+    L_enc->prim = aux_prox->prox;
+    free(aux_prox);
+    L_enc->qtde--;
+    return true; 
 }
 
 bool remover_fim(lista_enc* L_enc){
@@ -254,11 +262,18 @@ bool remover_fim(lista_enc* L_enc){
     }
     
     celula* aux = L_enc->prim;
-    while (aux->prox != NULL)
+    if (aux->prox == NULL)
+    {
+        free(aux);
+        L_enc->prim == NULL;
+    }
+    
+    while (aux->prox->prox != NULL)
     {
         aux = aux->prox;
     }
-    free(aux);
+    free(aux->prox);
+    aux->prox == NULL;
     L_enc->qtde--;
     return true;
 }
@@ -271,8 +286,8 @@ int tamanho(lista_enc* L_enc){
     return L_enc->qtde;
 }
 
-bool vazia(lista_enc* L_enc){
-    if (L_enc->qtde == 0) // perguntar ele se eu devia dar um exit aqui se nao tiver uma lista iniciada
+bool vazia(lista_enc* L_enc){    
+    if (L_enc->qtde == 0)
     {
         return true;
     }

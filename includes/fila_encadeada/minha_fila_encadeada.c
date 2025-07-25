@@ -13,7 +13,7 @@ struct celula
     celula* prox;
 };
 
-static celula* criar_celula(Item it){ // certo/pronto
+static celula* criar_celula(Item it){
     celula* nova = (celula*) calloc(1, sizeof(celula));
     if (nova == NULL)
     {
@@ -24,26 +24,26 @@ static celula* criar_celula(Item it){ // certo/pronto
     return nova;
 }
 
-bool esvaziar(fila_enc* L_enc){ // certo/pronto 
-    if (L_enc == NULL || L_enc->prim == NULL)
+bool esvaziar(fila_enc* F_enc){ 
+    if (F_enc == NULL || F_enc->prim == NULL)
     {
         return false;
     }
     
-    while (L_enc->prim != NULL)
+    while (F_enc->prim != NULL)
     {
-        remover(L_enc);
+        remover(F_enc);
     }
     return true;
 }
 
-int front(fila_enc* L_enc){ // certo/pronto
-    if (L_enc == NULL || L_enc->prim == NULL)
+int front(fila_enc* F_enc){
+    if (F_enc == NULL || vazia(F_enc))
     {
         printf("Sem elemento a ser exibido");
         return 0;
     }
-    celula* aux = L_enc->prim;
+    celula* aux = F_enc->prim;
     while (aux->prox != NULL)
     {
         aux = aux->prox;
@@ -51,55 +51,60 @@ int front(fila_enc* L_enc){ // certo/pronto
     return aux->valor;
 }
 
-fila_enc* iniciar(){ // certo/pronto
-    fila_enc* L_enc = (fila_enc*) malloc(sizeof(fila_enc));
-    if (L_enc == NULL)
+fila_enc* iniciar(){ 
+    fila_enc* F_enc = (fila_enc*) calloc(1, sizeof(fila_enc));
+    if (F_enc == NULL)
     {
         return NULL;
     }
-    L_enc->prim = NULL;
 
-    return L_enc;
+    return F_enc;
 }
 
-bool inserir(fila_enc* L_enc, Item it){ // certo/pronto
+bool inserir(fila_enc* F_enc, Item it){
+    if (F_enc == NULL)
+    {
+        return false;
+    }
+    
     celula* nova_celula = criar_celula(it);
     if (nova_celula == NULL)
     {
         return false;
     }
 
-    nova_celula->prox = L_enc->prim;
-    L_enc->prim = nova_celula;
+    nova_celula->prox = F_enc->prim;
+    F_enc->prim = nova_celula;
     return true;
 }
 
-fila_enc* liberar(fila_enc* L_enc){ // certo/pronto
-    if (L_enc == NULL)
+fila_enc* liberar(fila_enc* F_enc){
+    if (F_enc == NULL)
     {
         return NULL;
     }
     
-    esvaziar(L_enc);
+    esvaziar(F_enc);
     
-    free(L_enc);
+    free(F_enc);
     return NULL;
 }
 
-bool remover(fila_enc* L_enc){ // certo/pronto
-    if (L_enc == NULL || L_enc->prim == NULL)
+bool remover(fila_enc* F_enc){
+    if (F_enc == NULL || vazia(F_enc))
     {
         return false;
     }
     
-    celula* aux_ant = L_enc->prim;
+    celula* aux_ant = F_enc->prim;
     if (aux_ant->prox == NULL)
     {
-        L_enc->prim = NULL;
+        F_enc->prim = NULL;
         free(aux_ant);
         return true;
     }
-    celula* aux_pro = L_enc->prim->prox;
+
+    celula* aux_pro = aux_ant->prox;
     while (aux_pro->prox != NULL)
     {
         aux_ant = aux_pro;
@@ -110,14 +115,15 @@ bool remover(fila_enc* L_enc){ // certo/pronto
     return true;
 }
 
-int tamanho(fila_enc* L_enc){ // certo/pronto
-    if (L_enc == NULL)
+int tamanho(fila_enc* F_enc){
+    if (F_enc == NULL)
     {
         printf("Fila nao inciada.");
         return 0;
     }
+
     int quant = 0;
-    celula* aux = L_enc->prim;
+    celula* aux = F_enc->prim;
     while (aux != NULL)
     {
         quant++;
@@ -126,21 +132,17 @@ int tamanho(fila_enc* L_enc){ // certo/pronto
     return quant;
 }
 
-bool vazia(fila_enc* L_enc){ // certo/pronto
-    if (L_enc == NULL)
+bool vazia(fila_enc* F_enc){
+    if (F_enc == NULL)
     {
         printf("Fila, nao iniciada.");
         return false;
     }
     
-    if (L_enc->prim == NULL)
+    if (F_enc->prim == NULL)
     {
         return true;
     }
-    else
-    {
-        return false;
-    }
-}
 
-// eu deveria fazer uma de verificar se estah vazia ???
+    return false;
+}
